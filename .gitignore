@@ -1,0 +1,15 @@
+# Ignore data & venv directories
+data/claim_data/*
+data/absen_result/*
+!data/claim_data/.gitkeep
+!data/absen_result/.gitkeep
+venv/
+
+# Don't ignore template files
+!data/template_capture.docx
+!data/ssportal_absen_data-template.csv
+
+# Ignore all JSON files except secret-template.json and config-template.json
+*.json
+!secret-template.json
+!config-template.json

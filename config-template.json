@@ -1,0 +1,12 @@
+{
+    "ssportal_claim": {
+        "last_run": "",
+        "last_claimed": ""
+    },
+    "ssportal_fill": {
+        "last_run": ""
+    },
+    "bipo_fill": {
+        "last_run": ""
+    }
+}
