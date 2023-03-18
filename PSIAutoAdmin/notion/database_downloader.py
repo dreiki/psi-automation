@@ -20,7 +20,7 @@ except:
     """)
 
 def page_block_get(id=None,data=""):
-    MODULE_LOGGER.debug("Individual data page collector method called")
+    MODULE_LOGGER.debug("Individual data detail collector method called")
     if id is not None:
         url = f"https://api.notion.com/v1/blocks/{id}/children"
 

@@ -53,6 +53,10 @@ def login_check(credential,page,page_number,browser_type):
     MODULE_LOGGER.info(f"Currently at : {page.url}")
 
 def data_fill_processor(page,data):
+    """
+    The main actual data processing method after the site is navigated.
+    Will fill the form multiple time based on total data passed through the argument.
+    """
     MODULE_LOGGER.debug("Fill processor method is called")
     MODULE_LOGGER.info(f"Total data to be inputted is : {len(data)}")
     for index,individualdata in enumerate(data):
@@ -122,7 +126,13 @@ def data_fill_processor(page,data):
             MODULE_LOGGER.error(f"Data number {index+1} from {len(data)} is invalid")
             print(f"There is something wrong in data number {index+1} / {len(data)}")
 
-def data_submit_processor(page,operation=""):
+def data_final_processor(page,operation=""):
+    """
+    Finishing method after all data is finished inputted.
+    Will navigate back to home activity page.
+    If operation empty (default) method will only navigate.
+    Will try to click submit all button if Submit is passed trough operation.
+    """
     MODULE_LOGGER.info("Submit method is called")
     page.goto("https://ssportal-tbs-2.packet-systems.com/activity")
     page.wait_for_url("https://ssportal-tbs-2.packet-systems.com/activity")
@@ -142,6 +152,10 @@ def data_submit_processor(page,operation=""):
 
 
 def run(url_chrome,page_number,credential,browser_type,data):
+    """
+    TESTED AND CURRENTLY WORKING WITH THE UI PROMPT
+    Main method to run the absen fill automation scripts.
+    """
     MODULE_LOGGER.info("SSPORTAL fill automation script called")
     print("\nRunning SSPORTAL fill automation scripts\n")
     csv_path = data["csv_file"]
@@ -152,6 +166,6 @@ def run(url_chrome,page_number,credential,browser_type,data):
         page.set_default_timeout(60000)
         login_check(credential,page,page_number,browser_type)
         data_fill_processor(page,csv_data)
-        data_submit_processor(page)
+        data_final_processor(page)
         MODULE_LOGGER.info("Script Finished")
 

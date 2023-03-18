@@ -38,7 +38,12 @@ def login_check(credential,page,page_number,browser_type):
     MODULE_LOGGER.info(f"Currently at: {page.url}")
 
 def login_navigator(page,credential):
+    """
+    Navigate the login process. 
+    From input username password to MFA.
+    """
     # page.pause()
+    
     MODULE_LOGGER.debug("Login Navigator method called")
     MODULE_LOGGER.info("Navigating trough the site")
     while page.locator("div.pa-welcome-title span").is_hidden():
