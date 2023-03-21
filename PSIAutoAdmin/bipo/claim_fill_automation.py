@@ -1,5 +1,6 @@
 from playwright.sync_api import sync_playwright
-from PSIAutoAdmin.util import csv_processor,browser_initiator
+from PSIAutoAdmin.util import csv_processor,browser_initiator,config_json
+from datetime import datetime
 import json
 import logging
 
@@ -199,7 +200,8 @@ def run(url_chrome,page_number,credential,browser_type,data):
     MODULE_LOGGER.info(f"docx file in path : {docx_path}")
     MODULE_LOGGER.info(f"csv file in path : {csv_path}")
     csv_data = csv_processor.parse(csv_path)
-
+    latest_date = max(datetime.strptime(d["date"], "%d-%m-%Y").strftime("%Y-%m-%d") for d in csv_data)
+    MODULE_LOGGER.info(f"Latest date that will be claimed is from {latest_date}")
     with sync_playwright() as playwright:
         page = browser_initiator.initial_browser_checker(playwright,url_chrome,page_number,browser_type)
         login_check(credential,page,page_number,browser_type)
@@ -210,4 +212,5 @@ def run(url_chrome,page_number,credential,browser_type,data):
             claim_save(page,operation="submit")
         else:
             claim_save(page)
+        config_json.update("bipo_fill",data=datetime.strptime(latest_date, "%Y-%m-%d").strftime("%d %b %Y"))
         MODULE_LOGGER.info("Script Finished")

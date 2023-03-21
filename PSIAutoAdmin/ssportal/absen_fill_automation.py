@@ -1,5 +1,5 @@
 from playwright.sync_api import sync_playwright
-from PSIAutoAdmin.util import csv_processor,browser_initiator
+from PSIAutoAdmin.util import csv_processor,browser_initiator,config_json
 from datetime import datetime
 from pathlib import Path
 import re
@@ -167,5 +167,6 @@ def run(url_chrome,page_number,credential,browser_type,data):
         login_check(credential,page,page_number,browser_type)
         data_fill_processor(page,csv_data)
         data_final_processor(page)
+        config_json.update("ssportal_fill")
         MODULE_LOGGER.info("Script Finished")
 

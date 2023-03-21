@@ -1,5 +1,5 @@
 from playwright.sync_api import sync_playwright
-from PSIAutoAdmin.util import csv_processor,browser_initiator
+from PSIAutoAdmin.util import csv_processor,browser_initiator,config_json
 from datetime import datetime, time
 from pathlib import Path
 from docx import Document
@@ -115,7 +115,17 @@ def claimable_data_collector(page,screenshot_folder):
                 print(f'The data is:\n{claimable_data_dictionary}\nxxxxxxxxxx\n')
         else :
             MODULE_LOGGER.debug(f'Data number {index+1} / {row.count()} skipped due to filter')
+    
+    # Filtering duplicate date, not currently working
+    # filtered_data = []
+    # seen_dates = set()
 
+    # for item in csv_data_list:
+    #     if item['date'] not in seen_dates:
+    #         filtered_data.append(item)
+    #         seen_dates.add(item['date'])
+
+    # print(filtered_data)
     return {"csv_data":csv_data_list,"document_data":document_data_list}
 
 def login_check(credential,page,page_number,browser_type):
@@ -188,4 +198,5 @@ def run(url_chrome,page_number,credential,browser_type):
         document_template.save(document_name)
         MODULE_LOGGER.info(f"CSV saved at : {csv_name}")
         MODULE_LOGGER.info(f"DOCX saved at : {document_name}")
+        config_json.update("ssportal_claim")
         MODULE_LOGGER.info(f"Script finished at : {datetime.now().strftime('%H:%M %d-%m-%Y')}")
